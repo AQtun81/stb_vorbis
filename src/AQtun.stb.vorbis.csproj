@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>AQtun.stb.vorbis</PackageId>
+    <PackageProjectUrl>https://github.com/AQtun81/stb_vorbis</PackageProjectUrl>
+    <Authors>AQtun</Authors>
+    <PackageTags>vorbis ogg audio sound</PackageTags>
+    <Version>1.22.0</Version>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/nothings/stb</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
+    <TargetFrameworks>net10.0;net8.0;net7.0;net5.0;netstandard2.1;netstandard2.0;net462</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="runtimes\**\*" Pack="true" PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="static\**\*" Pack="true" PackagePath="static\%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="AQtun.stb.vorbis.targets" Pack="true" PackagePath="buildTransitive\AQtun.stb.vorbis.targets"/>
+  </ItemGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework.StartsWith(`net4`))' And '$(TargetFramework)' != 'net48' ">
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+  </ItemGroup>
+
+</Project>
