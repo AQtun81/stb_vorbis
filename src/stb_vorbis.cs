@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace AQtun.stb.vorbis
@@ -19,10 +20,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_info")]
-        public static partial stb_vorbis_info get_info(stb_vorbis_ptr* file);
+        public static partial stb_vorbis_info get_info(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_info")]
-        public static extern stb_vorbis_info get_info(stb_vorbis_ptr* file);
+        public static extern stb_vorbis_info get_info(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -30,10 +31,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
          #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_comment")]
-        public static partial stb_vorbis_comment get_comment(stb_vorbis_ptr* file);
+        public static partial stb_vorbis_comment get_comment(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_comment")]
-        public static extern stb_vorbis_comment get_comment(stb_vorbis_ptr* file);
+        public static extern stb_vorbis_comment get_comment(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -41,10 +42,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_error")]
-        public static partial int get_error(stb_vorbis_ptr* file);
+        public static partial int get_error(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_error")]
-        public static extern int get_error(stb_vorbis_ptr* file);
+        public static extern int get_error(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -52,10 +53,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_close")]
-        public static partial void close(stb_vorbis_ptr* file);
+        public static partial void close(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_close")]
-        public static extern void close(stb_vorbis_ptr* file);
+        public static extern void close(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -67,10 +68,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_sample_offset")]
-        public static partial int get_sample_offset(stb_vorbis_ptr* file);
+        public static partial int get_sample_offset(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_sample_offset")]
-        public static extern int get_sample_offset(stb_vorbis_ptr* file);
+        public static extern int get_sample_offset(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -79,10 +80,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_file_offset")]
-        public static partial uint get_file_offset(stb_vorbis_ptr* file);
+        public static partial uint get_file_offset(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_file_offset")]
-        public static extern uint get_file_offset(stb_vorbis_ptr* file);
+        public static extern uint get_file_offset(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static partial stb_vorbis_ptr* open_pushdata(byte* datablock, int datablock_length_in_bytes, ref int datablock_memory_consumed_in_bytes, out int error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, ref int datablock_memory_consumed_in_bytes, out int error, stb_vorbis_alloc* alloc_buffer = null);
         
         /// <summary>
         /// create a vorbis decoder by passing in the initial data block containing<br/>
@@ -110,10 +111,10 @@ namespace AQtun.stb.vorbis
         ///       incomplete and you need to pass in a larger block from the start of the file
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static partial stb_vorbis_ptr* open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static extern stb_vorbis_ptr* open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static extern stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
         #endif
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_decode_frame_pushdata")]
-        public static partial int decode_frame_pushdata(stb_vorbis_ptr* file, byte* datablock, int datablock_length_in_bytes, out int channels, ref float** output, out int samples);
+        public static partial int decode_frame_pushdata(stb_vorbis_handle file, byte* datablock, int datablock_length_in_bytes, out int channels, ref float** output, out int samples);
 
         /// <summary>
         /// decode a frame of audio sample data if possible from the passed-in data block<br/>
@@ -181,10 +182,10 @@ namespace AQtun.stb.vorbis
         /// you need before then.
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_decode_frame_pushdata")]
-        public static partial int decode_frame_pushdata(stb_vorbis_ptr* file, byte* datablock, int datablock_length_in_bytes, int* channels, float*** output, int* samples);
+        public static partial int decode_frame_pushdata(stb_vorbis_handle file, byte* datablock, int datablock_length_in_bytes, int* channels, float*** output, int* samples);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_decode_frame_pushdata")]
-        public static extern int decode_frame_pushdata(stb_vorbis_ptr* file, byte* datablock, int datablock_length_in_bytes, int* channels, float*** output, int* samples);
+        public static extern int decode_frame_pushdata(stb_vorbis_handle file, byte* datablock, int datablock_length_in_bytes, int* channels, float*** output, int* samples);
         #endif
 
         /// <summary>
@@ -201,10 +202,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_flush_pushdata")]
-        public static partial void flush_pushdata(stb_vorbis_ptr* file);
+        public static partial void flush_pushdata(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_flush_pushdata")]
-        public static extern void flush_pushdata(stb_vorbis_ptr* file);
+        public static extern void flush_pushdata(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -236,17 +237,17 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_memory")]
-        public static partial stb_vorbis_ptr* open_memory(byte* data, int len, out int error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_memory(byte* data, int len, out int error, stb_vorbis_alloc* alloc_buffer = null);
         
         /// <summary>
         /// create an ogg vorbis decoder from an ogg vorbis stream in memory (note<br/>
         /// this must be the entire stream!). on failure, returns NULL and sets *error
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_memory")]
-        public static partial stb_vorbis_ptr* open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_open_memory")]
-        public static extern stb_vorbis_ptr* open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static extern stb_vorbis_handle open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
         #endif
 
         /// <summary>
@@ -259,10 +260,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_seek_frame")]
-        public static partial int seek_frame(stb_vorbis_ptr* file, uint sample_number);
+        public static partial int seek_frame(stb_vorbis_handle file, uint sample_number);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_seek_frame")]
-        public static extern int seek_frame(stb_vorbis_ptr* file, uint sample_number);
+        public static extern int seek_frame(stb_vorbis_handle file, uint sample_number);
         #endif
 
         /// <summary>
@@ -275,10 +276,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_seek")]
-        public static partial int seek(stb_vorbis_ptr* file, uint sample_number);
+        public static partial int seek(stb_vorbis_handle file, uint sample_number);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_seek")]
-        public static extern int seek(stb_vorbis_ptr* file, uint sample_number);
+        public static extern int seek(stb_vorbis_handle file, uint sample_number);
         #endif
 
         /// <summary>
@@ -286,10 +287,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_seek_start")]
-        public static partial int seek_start(stb_vorbis_ptr* file);
+        public static partial int seek_start(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_seek_start")]
-        public static extern int seek_start(stb_vorbis_ptr* file);
+        public static extern int seek_start(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -297,10 +298,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_stream_length_in_samples")]
-        public static partial uint stream_length_in_samples(stb_vorbis_ptr* file);
+        public static partial uint stream_length_in_samples(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_stream_length_in_samples")]
-        public static extern uint stream_length_in_samples(stb_vorbis_ptr* file);
+        public static extern uint stream_length_in_samples(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -308,10 +309,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_stream_length_in_seconds")]
-        public static partial float stream_length_in_seconds(stb_vorbis_ptr* file);
+        public static partial float stream_length_in_seconds(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_stream_length_in_seconds")]
-        public static extern float stream_length_in_seconds(stb_vorbis_ptr* file);
+        public static extern float stream_length_in_seconds(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -326,7 +327,7 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_frame_float")]
-        public static partial int get_frame_float(stb_vorbis_ptr* file, out int channels, ref float** output);
+        public static partial int get_frame_float(stb_vorbis_handle file, out int channels, ref float** output);
 
         /// <summary>
         /// decode the next frame and return the number of samples. the number of<br/>
@@ -339,18 +340,18 @@ namespace AQtun.stb.vorbis
         /// and stb_vorbis_get_samples_*(), since the latter calls the former.
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_frame_float")]
-        public static partial int get_frame_float(stb_vorbis_ptr* file, int* channels, float*** output);
+        public static partial int get_frame_float(stb_vorbis_handle file, int* channels, float*** output);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_frame_float")]
-        public static extern int get_frame_float(stb_vorbis_ptr* file, int* channels, float*** output);
+        public static extern int get_frame_float(stb_vorbis_handle file, int* channels, float*** output);
         #endif
 
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_frame_short_interleaved")]
-        public static partial int get_frame_short_interleaved(stb_vorbis_ptr* file, int num_c, short* buffer, int num_shorts);
+        public static partial int get_frame_short_interleaved(stb_vorbis_handle file, int num_c, short* buffer, int num_shorts);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_frame_short_interleaved")]
-        public static extern int get_frame_short_interleaved(stb_vorbis_ptr* file, int num_c, short* buffer, int num_shorts);
+        public static extern int get_frame_short_interleaved(stb_vorbis_handle file, int num_c, short* buffer, int num_shorts);
         #endif
 
         /// <summary>
@@ -381,10 +382,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_frame_short")]
-        public static partial int get_frame_short(stb_vorbis_ptr* file, int num_c, short** buffer, int num_samples);
+        public static partial int get_frame_short(stb_vorbis_handle file, int num_c, short** buffer, int num_samples);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_frame_short")]
-        public static extern int get_frame_short(stb_vorbis_ptr* file, int num_c, short** buffer, int num_samples);
+        public static extern int get_frame_short(stb_vorbis_handle file, int num_c, short** buffer, int num_samples);
         #endif
 
         /// <summary>
@@ -395,10 +396,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_samples_float_interleaved")]
-        public static partial int get_samples_float_interleaved(stb_vorbis_ptr* file, int channels, float* buffer, int num_floats);
+        public static partial int get_samples_float_interleaved(stb_vorbis_handle file, int channels, float* buffer, int num_floats);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_samples_float_interleaved")]
-        public static extern int get_samples_float_interleaved(stb_vorbis_ptr* file, int channels, float* buffer, int num_floats);
+        public static extern int get_samples_float_interleaved(stb_vorbis_handle file, int channels, float* buffer, int num_floats);
         #endif
 
         /// <summary>
@@ -409,10 +410,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_samples_float")]
-        public static partial int get_samples_float(stb_vorbis_ptr* file, int channels, float** buffer, int num_samples);
+        public static partial int get_samples_float(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_samples_float")]
-        public static extern int get_samples_float(stb_vorbis_ptr* file, int channels, float** buffer, int num_samples);
+        public static extern int get_samples_float(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
         #endif
 
         /// <summary>
@@ -424,10 +425,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_samples_short_interleaved")]
-        public static partial int get_samples_short_interleaved(stb_vorbis_ptr* file, int channels, float* buffer, int num_floats);
+        public static partial int get_samples_short_interleaved(stb_vorbis_handle file, int channels, float* buffer, int num_floats);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_samples_short_interleaved")]
-        public static extern int get_samples_short_interleaved(stb_vorbis_ptr* file, int channels, float* buffer, int num_floats);
+        public static extern int get_samples_short_interleaved(stb_vorbis_handle file, int channels, float* buffer, int num_floats);
         #endif
 
         /// <summary>
@@ -439,14 +440,19 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_samples_short")]
-        public static partial int get_samples_short(stb_vorbis_ptr* file, int channels, float** buffer, int num_samples);
+        public static partial int get_samples_short(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_samples_short")]
-        public static extern int get_samples_short(stb_vorbis_ptr* file, int channels, float** buffer, int num_samples);
+        public static extern int get_samples_short(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
         #endif
     }
 
-    public struct stb_vorbis_ptr;
+    public struct stb_vorbis_handle : IDisposable
+    {
+        public nuint handle;
+
+        public void Dispose() => stb_vorbis.close(this);
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct stb_vorbis_info
