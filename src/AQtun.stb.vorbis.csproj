@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <PackageId>AQtun.stb.vorbis</PackageId>
@@ -13,7 +13,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     
-    <TargetFrameworks>net10.0;net8.0;net7.0;net5.0;netstandard2.1;netstandard2.0;net462</TargetFrameworks>
+    <TargetFrameworks>net10.0;net8.0;net7.0;net5.0;netstandard2.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
@@ -21,22 +21,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="runtimes\**\*" Pack="true" PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
-    <None Include="static\**\*" Pack="true" PackagePath="static\%(RecursiveDir)%(Filename)%(Extension)" />
-    <None Include="..\README.md" Pack="true" PackagePath="\"/>
-    <None Include="AQtun.stb.vorbis.targets" Pack="true" PackagePath="buildTransitive\AQtun.stb.vorbis.targets"/>
+    <None Include="runtimes/**/*" Pack="true" PackagePath="runtimes/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="static/**/*" Pack="true" PackagePath="static/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="../README.md" Pack="true" PackagePath="/"/>
+    <None Include="AQtun.stb.vorbis.targets" Pack="true" PackagePath="buildTransitive/AQtun.stb.vorbis.targets"/>
   </ItemGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="System.Memory" Version="4.6.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework.StartsWith(`net4`))' And '$(TargetFramework)' != 'net48' ">
-    <PackageReference Include="System.Memory" Version="4.6.3" />
-  </ItemGroup>
 
 </Project>

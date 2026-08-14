@@ -3,3 +3,5 @@
 #else
   #define VORBIS_EXPORT __attribute__((visibility("default")))
 #endif
+
+#define STB_VORBIS_NO_STDIO
