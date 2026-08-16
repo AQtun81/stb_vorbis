@@ -62,7 +62,7 @@ public static int get_samples_float_interleaved(stb_vorbis_handle file, int chan
 
 public static int get_samples_float(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
 
-public static int get_samples_short_interleaved(stb_vorbis_handle file, int channels, float* buffer, int num_floats);
+public static int get_samples_short_interleaved(stb_vorbis_handle file, int channels, short* buffer, int num_shorts);
 
-public static int get_samples_short(stb_vorbis_handle file, int channels, float** buffer, int num_samples);
+public static int get_samples_short(stb_vorbis_handle file, int channels, short** buffer, int num_samples);
 ```
