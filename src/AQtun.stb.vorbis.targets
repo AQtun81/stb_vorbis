@@ -1,17 +1,17 @@
 <Project>
   <ItemGroup Condition="'$(PublishAot)' == 'true' AND '$(RuntimeIdentifier)' != ''">
   
-    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\static\$(RuntimeIdentifier)\libstbvorbis.lib" 
+    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\static\$(RuntimeIdentifier)\libstbvorbis.lib"
                    Condition="$(RuntimeIdentifier.Contains('win'))" />
 
-    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\static\$(RuntimeIdentifier)\libstbvorbis.a" 
+    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\static\$(RuntimeIdentifier)\libstbvorbis.a"
                    Condition="$(RuntimeIdentifier.Contains('linux')) OR $(RuntimeIdentifier.Contains('osx'))" />
 
     <DirectPInvoke Include="libstbvorbis" />
   </ItemGroup>
 
-  <Target Name="RemoveDynamicLibrariesForAot" 
-          AfterTargets="ComputeFilesToPublish" 
+  <Target Name="RemoveDynamicLibrariesWhenStaticallyLinkingStbVorbis"
+          AfterTargets="ComputeFilesToPublish"
           Condition="'$(PublishAot)' == 'true' AND '$(RuntimeIdentifier)' != ''">
           
     <ItemGroup>
