@@ -4,7 +4,7 @@
     <PackageId>AQtun.stb.vorbis</PackageId>
     <PackageProjectUrl>https://github.com/AQtun81/stb_vorbis</PackageProjectUrl>
     <Authors>AQtun</Authors>
-    <PackageTags>vorbis ogg audio sound</PackageTags>
+    <PackageTags>vorbis ogg audio sound stbvorbis stb_vorbis</PackageTags>
     <Version>1.22.0</Version>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/nothings/stb</RepositoryUrl>
