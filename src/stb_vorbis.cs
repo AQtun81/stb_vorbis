@@ -388,6 +388,27 @@ namespace AQtun.stb.vorbis
         public int max_frame_size;
     }
 
+    /// <summary>
+    /// normally stb_vorbis uses malloc() to allocate memory at startup,<br/>
+    /// and alloca() to allocate temporary memory during a frame on the<br/>
+    /// stack. (Memory consumption will depend on the amount of setup<br/>
+    /// data in the file and how you set the compile flags for speed<br/>
+    /// vs. size. In my test files the maximal-size usage is ~150KB.)<br/>
+    ///<br/>
+    /// You can modify the wrapper functions in the source (setup_malloc,<br/>
+    /// setup_temp_malloc, temp_malloc) to change this behavior, or you<br/>
+    /// can use a simpler allocation model: you pass in a buffer from<br/>
+    /// which stb_vorbis will allocate _all_ its memory (including the<br/>
+    /// temp memory). "open" may fail with a VORBIS_outofmem if you<br/>
+    /// do not pass in enough data; there is no way to determine how<br/>
+    /// much you do need except to succeed (at which point you can<br/>
+    /// query get_info to find the exact amount required. yes I know<br/>
+    /// this is lame).<br/>
+    ///<br/>
+    /// If you pass in a non-NULL buffer of the type below, allocation<br/>
+    /// will occur from it as described above. Otherwise just pass NULL<br/>
+    /// to use malloc()/alloca()
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct stb_vorbis_alloc
     {
