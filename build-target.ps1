@@ -105,10 +105,9 @@ switch ($target)
     & $cc --target=$androidTarget -shared -o src/runtimes/$target/native/libstbvorbis.so temp/stb_vorbis.c -O2
     Remove-Item "src/static/$target/libstbvorbis.o"
   }
-  {$_ -like "ios*" -or $_ -like "iossimulator-*"}
+  {$_ -like "ios*"}
   {
-    $cc = & xcrun -find clang
-    $ar = & xcrun -find ar
+    $sdkName = if ($target -like "iossimulator-*") { "iphonesimulator" } else { "iphoneos" }
 
     $iosTarget = switch ($target)
     {
@@ -117,8 +116,8 @@ switch ($target)
       "iossimulator-x64"   { "x86_64-apple-ios-simulator" }
     }
 
-    & $cc -target $iosTarget -c temp/stb_vorbis.c -o src/static/$target/libstbvorbis.o -O2 -fPIC
-    & $ar rcs src/static/$target/libstbvorbis.a src/static/$target/libstbvorbis.o
+    & xcrun --sdk $sdkName clang -target $iosTarget -c temp/stb_vorbis.c -o src/static/$target/libstbvorbis.o -O2 -fPIC
+    & xcrun --sdk $sdkName ar rcs src/static/$target/libstbvorbis.a src/static/$target/libstbvorbis.o
     Remove-Item "src/static/$target/libstbvorbis.o"
   }
 }
