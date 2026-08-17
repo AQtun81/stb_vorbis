@@ -42,10 +42,10 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_get_error")]
-        public static partial int get_error(stb_vorbis_handle file);
+        public static partial STBVorbisError get_error(stb_vorbis_handle file);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_error")]
-        public static extern int get_error(stb_vorbis_handle file);
+        public static extern STBVorbisError get_error(stb_vorbis_handle file);
         #endif
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, ref int datablock_memory_consumed_in_bytes, out int error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, ref int datablock_memory_consumed_in_bytes, out STBVorbisError error, stb_vorbis_alloc* alloc_buffer = null);
         
         /// <summary>
         /// create a vorbis decoder by passing in the initial data block containing<br/>
@@ -111,10 +111,10 @@ namespace AQtun.stb.vorbis
         ///       incomplete and you need to pass in a larger block from the start of the file
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, STBVorbisError* error, stb_vorbis_alloc* alloc_buffer = null);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_open_pushdata")]
-        public static extern stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static extern stb_vorbis_handle open_pushdata(byte* datablock, int datablock_length_in_bytes, int* datablock_memory_consumed_in_bytes, STBVorbisError* error, stb_vorbis_alloc* alloc_buffer = null);
         #endif
 
         /// <summary>
@@ -237,17 +237,17 @@ namespace AQtun.stb.vorbis
         /// </summary>
         #if NET7_0_OR_GREATER
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_memory")]
-        public static partial stb_vorbis_handle open_memory(byte* data, int len, out int error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_memory(byte* data, int len, out STBVorbisError error, stb_vorbis_alloc* alloc_buffer = null);
         
         /// <summary>
         /// create an ogg vorbis decoder from an ogg vorbis stream in memory (note<br/>
         /// this must be the entire stream!). on failure, returns NULL and sets *error
         /// </summary>
         [LibraryImport(NATIVE_LIB, EntryPoint = "stb_vorbis_open_memory")]
-        public static partial stb_vorbis_handle open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static partial stb_vorbis_handle open_memory(byte* data, int len, STBVorbisError* error, stb_vorbis_alloc* alloc_buffer = null);
         #else
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_open_memory")]
-        public static extern stb_vorbis_handle open_memory(byte* data, int len, int* error, stb_vorbis_alloc* alloc_buffer = null);
+        public static extern stb_vorbis_handle open_memory(byte* data, int len, STBVorbisError* error, stb_vorbis_alloc* alloc_buffer = null);
         #endif
 
         /// <summary>
@@ -531,4 +531,39 @@ namespace AQtun.stb.vorbis
             }
         }
     }
+    
+    public enum STBVorbisError
+    {
+        no_error,
+
+        need_more_data = 1,             // not a real error
+
+        invalid_api_mixing,             // can't mix API modes
+        outofmem,                       // not enough memory
+        feature_not_supported,          // uses floor 0
+        too_many_channels,              // STB_VORBIS_MAX_CHANNELS is too small
+        file_open_failure,              // fopen() failed
+        seek_without_length,            // can't seek in unknown-length file
+
+        unexpected_eof = 10,            // file is truncated?
+        seek_invalid,                   // seek past EOF
+
+        // decoding errors (corrupt/invalid stream) -- you probably
+        // don't care about the exact details of these
+
+        // vorbis errors:
+        invalid_setup = 20,
+        invalid_stream,
+
+        // ogg errors:
+        missing_capture_pattern = 30,
+        invalid_stream_structure_version,
+        continued_packet_flag_invalid,
+        incorrect_stream_serial_number,
+        invalid_first_page,
+        bad_packet_type,
+        cant_find_last_page,
+        seek_failed,
+        ogg_skeleton_not_supported
+    };
 }
