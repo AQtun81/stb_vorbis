@@ -123,8 +123,62 @@ jobs:
         name: ${{ matrix.target }}-build
         path: src/
 
+  build-android:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [android-arm, android-arm64, android-x86, android-x64]
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          
+      - name: Setup Android NDK
+        run: |
+          echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
+          if [ -z "$ANDROID_NDK_HOME" ]; then
+            echo "ANDROID_NDK_HOME=$(dirname $(dirname $(find /usr/local/lib/android/sdk/ndk -name ndk-build)))" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compile for ${{ matrix.target }}
+        shell: pwsh
+        run: |
+          pwsh build-prep.ps1
+          pwsh build-target.ps1 ${{ matrix.target }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.target }}-build
+          path: src/
+
+  build-ios:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        target: [ios-arm64, iossimulator-arm64, iossimulator-x64]
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Compile for ${{ matrix.target }}
+        shell: pwsh
+        run: |
+          pwsh build-prep.ps1
+          pwsh build-target.ps1 ${{ matrix.target }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.target }}-build
+          path: src/
+
   push-package:
-    needs: [build-linux, build-linux-arm, build-macos, build-windows, build-windows-arm]
+    needs: [build-linux, build-linux-arm, build-macos, build-windows, build-windows-arm, build-android, build-ios]
     runs-on: ubuntu-latest
     permissions:
       contents: write # for the GitHub release upload
