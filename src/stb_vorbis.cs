@@ -271,6 +271,32 @@ namespace AQtun.stb.vorbis
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_frame_float")]
         public static extern int get_frame_float(stb_vorbis_handle file, int* channels, float*** output);
 
+        /// <summary>
+        /// decode the next frame and return the number of *samples* per channel.<br/>
+        /// Note that for interleaved data, you pass in the number of shorts (the<br/>
+        /// size of your array), but the return value is the number of samples per<br/>
+        /// channel, not the total number of samples.<br/>
+        ///<br/>
+        /// The data is coerced to the number of channels you request according to the<br/>
+        /// channel coercion rules (see below). You must pass in the size of your<br/>
+        /// buffer(s) so that stb_vorbis will not overwrite the end of the buffer.<br/>
+        /// The maximum buffer size needed can be gotten from get_info(); however,<br/>
+        /// the Vorbis I specification implies an absolute maximum of 4096 samples<br/>
+        /// per channel.<br/>
+        /// <br/>
+        /// Channel coercion rules:<br/>
+        ///    Let M be the number of channels requested, and N the number of channels present,<br/>
+        ///    and Cn be the nth channel; let stereo L be the sum of all L and center channels,<br/>
+        ///    and stereo R be the sum of all R and center channels (channel assignment from the<br/>
+        ///    vorbis spec).<br/>
+        ///        M    N       output<br/>
+        ///        1    k      sum(Ck) for all k<br/>
+        ///        2    *      stereo L, stereo R<br/>
+        ///        k    l      k > l, the first l channels, then 0s<br/>
+        ///        k    l      k &lt;= l, the first k channels<br/>
+        ///    Note that this is not _good_ surround etc. mixing at all! It's just so<br/>
+        ///    you get something useful.
+        /// </summary>
         [DllImport(NATIVE_LIB, CallingConvention = CallingConvention.Cdecl, EntryPoint = "stb_vorbis_get_frame_short_interleaved")]
         public static extern int get_frame_short_interleaved(stb_vorbis_handle file, int num_c, short* buffer, int num_shorts);
 
