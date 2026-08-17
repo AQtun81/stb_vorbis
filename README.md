@@ -5,7 +5,7 @@
 | Windows  | ✓   | ✓   | ✗   | ✓     |
 | Linux    | ✓   | ✓   | ✓   | ✓     |
 | MacOS    | ✗   | ✓   | ✗   | ✓     |
-| Android  | ✓   | ✓   | ✓   | ✓     |
+| Android  | ✗   | ✓   | ✓   | ✓     |
 | iOS      | ✗   | ✓   | ✗   | ✓     |
 
 This package bundles both dynamic and static libraries, in AoT builds the library will be statically linked.<br>

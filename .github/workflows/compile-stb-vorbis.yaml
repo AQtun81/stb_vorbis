@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [android-arm, android-arm64, android-x86, android-x64]
+        target: [android-arm, android-arm64, android-x64]
     steps:
       - name: Checkout code with submodules
         uses: actions/checkout@v7
